@@ -75,7 +75,7 @@ namespace VrsHairPresetsManager
 			}
 
 			// 髪のマージ
-			var hairsConverted = other.Hairs.Where(x => x["Type"] == 2).OfType<JsonObject>().Select(hairGroup => {
+			var hairsConverted = other.Hairs.Where(x => x["Children"].Count > 0).OfType<JsonObject>().Select(hairGroup => {
 				hairGroup["Id"] = hairTranslated[hairGroup["Id"]] = NewID();
 				hairGroup["Children"] = new JsonArray(
 					hairGroup["Children"].OfType<JsonObject>().Select(hair => {
