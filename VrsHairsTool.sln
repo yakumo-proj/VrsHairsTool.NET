@@ -1,0 +1,22 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VrsHairsTool", "VrsHairsTool\VrsHairsTool.csproj", "{5CA6971E-099E-433E-B015-B338FCBC793E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|anycpu = Debug|anycpu
+		Release|anycpu = Release|anycpu
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5CA6971E-099E-433E-B015-B338FCBC793E}.Debug|anycpu.ActiveCfg = Debug|anycpu
+		{5CA6971E-099E-433E-B015-B338FCBC793E}.Debug|anycpu.Build.0 = Debug|anycpu
+		{5CA6971E-099E-433E-B015-B338FCBC793E}.Release|anycpu.ActiveCfg = Release|anycpu
+		{5CA6971E-099E-433E-B015-B338FCBC793E}.Release|anycpu.Build.0 = Release|anycpu
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
+	EndGlobalSection
+EndGlobal
