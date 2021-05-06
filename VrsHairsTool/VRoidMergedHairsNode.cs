@@ -116,11 +116,8 @@ namespace VrsHairPresetsManager
 
             Bones = new JsonArray(Bones.Concat(bonesChanged));
         }
-        public void MetaSelect(JsonObject otherMeta)
-        {            int comp = (String.Format("{0}", this.Meta["updateVroidVersionMajor"]))                .CompareTo(String.Format("{0}", otherMeta["updateVroidVersionMajor"]));            if (comp == 0) {                comp = (String.Format("{0}", this.Meta["updateVroidVersionMinor"]))                    .CompareTo(String.Format("{0}", otherMeta["updateVroidVersionMinor"]));            }            if (comp == 0) {                comp = (String.Format("{0}", this.Meta["updateVroidVersionPatch"]))                    .CompareTo(String.Format("{0}", otherMeta["updateVroidVersionPatch"]));            }            if (comp < 0) {                Meta = otherMeta;
-            }        }
 
-        public void MergeFinalize()
+		public void MergeFinalize()
         {
             System.Text.Encoding enc = new System.Text.UTF8Encoding(false);
             using (var sw = new StreamWriter(Path.Combine(this.DestPath, "preset.json"), false, enc)) {

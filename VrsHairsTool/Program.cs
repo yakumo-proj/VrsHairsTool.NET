@@ -5,8 +5,10 @@ using System.Runtime.InteropServices;
 using Mono.Options;
 using VrsHairPresetsManager;
 
-namespace Sample {
-    class MainClass {
+namespace Sample
+{
+	class MainClass
+	{
 		static string GetPresetDirectory()
 		{
 			if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) {
@@ -21,60 +23,59 @@ namespace Sample {
 		}
 
 		static int NextDirectoryNumber()
-        {
-            var dirInfo = new DirectoryInfo(GetPresetDirectory());
-            if (!dirInfo.Exists) {
-                dirInfo.Create();
-                return 0;
-            }
-            int o = 0;
-            return dirInfo.GetDirectories("preset*")
-                .Where(x => x.GetFiles("preset.json").Length > 0)
-                .Select(x => int.TryParse(x.Name.Substring(6), out o) ? o : -1)
-                .Max() + 1;
-        }
+		{
+			var dirInfo = new DirectoryInfo(GetPresetDirectory());
+			if (!dirInfo.Exists) {
+				dirInfo.Create();
+				return 0;
+			}
+			int o = 0;
+			return dirInfo.GetDirectories("preset*")
+				.Where(x => x.GetFiles("preset.json").Length > 0)
+				.Select(x => int.TryParse(x.Name.Substring(6), out o) ? o : -1)
+				.Max() + 1;
+		}
 
-        public static void Main(string[] args)
-        {
-            string presetNoStr = "";
-            string dispName = "";
+		public static void Main(string[] args)
+		{
+			string presetNoStr = "";
+			string dispName = "";
 
-            var optionSet = new OptionSet()
-              .Add("d|dispname=", "Merged Hair-Preset Display Name", v => dispName = v)
-              .Add("p|preset-dir-num=", "Preset Directory Number", v => presetNoStr = v);
+			var optionSet = new OptionSet()
+			  .Add("d|dispname=", "Merged Hair-Preset Display Name", v => dispName = v)
+			  .Add("p|preset-dir-num=", "Preset Directory Number", v => presetNoStr = v);
 
-            var filepaths = optionSet.Parse(args);
-            if (filepaths.Count < 2) {
-                Console.WriteLine("too few arguments.");
-                return;
-            }
+			var filepaths = optionSet.Parse(args);
+			if (filepaths.Count < 2) {
+				Console.WriteLine("too few arguments.");
+				return;
+			}
 
-            int presetNo;
-            try
-            {
-                presetNo = int.Parse(presetNoStr);
-			} catch (Exception) {
-                presetNo = NextDirectoryNumber();
-            }
-			if (dispName.Length == 0) {
-                dispName = "プリセット" + presetNo;
-            }
-
-            var destPath = Path.Combine(GetPresetDirectory(), String.Format("preset{0}", presetNo));
-            var merged = new VRoidMergedHairsNode(filepaths[0], destPath, dispName);
+			int presetNo;
 			try {
-                merged.MergeInitialize();
+				presetNo = int.Parse(presetNoStr);
+			} catch (Exception) {
+				presetNo = NextDirectoryNumber();
+			}
+			if (dispName.Length == 0) {
+				dispName = "プリセット" + presetNo;
+			}
+
+			var destPath = Path.Combine(GetPresetDirectory(), String.Format("preset{0}", presetNo));
+			var merged = new VRoidMergedHairsNode(filepaths[0], destPath, dispName);
+			try {
+				merged.MergeInitialize();
 				foreach (var other in filepaths.Skip(1).Select(x => new VRoidHairsNode(x))) {
-                    merged.Merge(other);
-                }
-                merged.MergeFinalize();
-                Console.WriteLine(destPath + " created.");
+					merged.Merge(other);
+				}
+				merged.MergeFinalize();
+				Console.WriteLine(destPath + " created.");
 			} catch (Exception e) {
 				if (Directory.Exists(destPath)) {
-                    Directory.Delete(destPath, true);
-                }
-                Console.WriteLine(e.ToString());
-            }
-        }
-    }
+					Directory.Delete(destPath, true);
+				}
+				Console.WriteLine(e.ToString());
+			}
+		}
+	}
 }
